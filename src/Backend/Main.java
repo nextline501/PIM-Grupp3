@@ -11,7 +11,7 @@ public class Main {
         Database db = new Database();
 
         try {
-            app.use(Middleware.statics(Paths.get("/src/Frontend").toString()));
+            app.use(Middleware.statics(Paths.get("src/Frontend").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
