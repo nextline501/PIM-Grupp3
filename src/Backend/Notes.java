@@ -2,7 +2,7 @@ package Backend;
 
 public class Notes {
     private int id;
-    private String text;
+    private String noteText;
     private String date;
 
     Notes(){
@@ -13,10 +13,10 @@ public class Notes {
         return id;
     }
 
-    public String getText() {
-        return text;
+    public String getNoteText() {
+        return noteText;
     }
-    
+
     public String getDate() {
         return date;
     }
@@ -25,8 +25,8 @@ public class Notes {
         this.id = id;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setNoteText(String text) {
+        this.noteText = text;
     }
 
     public void setDate(String date) {

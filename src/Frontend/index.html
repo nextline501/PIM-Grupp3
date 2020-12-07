@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="main.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>TEST</h1>
+    <section style="width: 200px; float:left; height:1000px; background-color:lightblue">
+        <h1>Notes</h1>
+        <ul>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+            <li>Test</li>
+        </ul>
+    </section>
+    <section style="width: 100px; float:left; height:100px;">
+        <form id="textAreaForm">
+            <textarea type="text" id="textArea" rows="40" cols="120" style="margin-top: 25px;"></textarea>
+            <button type="submit">Save</button>
+        </form>
+    </section>
+    
 </body>
 </html>
