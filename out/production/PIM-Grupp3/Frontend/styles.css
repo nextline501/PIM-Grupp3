@@ -1,0 +1,29 @@
+h1{
+    font-family: Chunkfive, Georgia, san-serif; 
+    font-weight: normal;
+    font-size: 64px; 
+    font-size: 4rem; 
+    text-align: center;
+    line-height: 1; 
+}
+aside{
+    width: 29.787234042553%; 
+    float: left;
+    background: #c4c0db;
+    color: #201e1e;
+    height: 100%;
+    margin-top: 25px;
+}
+#textArea{
+    margin-top: 25px;
+}
+section{
+    margin-right: 4.255319148936%; 
+    width: 65.957446808511%;
+    float: left;
+}
+.wrapper{
+    max-width: 940px;
+    padding: 0 4% 0 4%;
+    margin: 0 auto; 
+}
