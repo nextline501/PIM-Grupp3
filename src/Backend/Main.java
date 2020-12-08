@@ -22,6 +22,12 @@ public class Main {
             res.send("post ok");
         });
 
+        app.post("/rest/delete", (req, res) ->{
+            Notes note = (Notes) req.getBody(Notes.class);
+            db.deleteNote(note);
+            res.send("delete post ok");
+        });
+
         try {
             app.use(Middleware.statics(Paths.get("src/Frontend").toString()));
         } catch (Exception e) {

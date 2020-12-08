@@ -43,4 +43,15 @@ public class Database {
         }
         return noteList;
     }
+
+    public void deleteNote(Notes note){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM notes WHERE notes.id = ?;");
+            stmt.setInt(1, note.getId());
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
