@@ -18,7 +18,7 @@ public class Database {
 
     public void createNote(Notes note){
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Notes (id, NoteText) VALUES(?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Notes (id, noteText) VALUES(?, ?)");
             stmt.setNull(1, note.getId());
             stmt.setString(2, note.getNoteText());
             stmt.executeUpdate();
