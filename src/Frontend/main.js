@@ -1,5 +1,5 @@
 let noteClassHolder = [];
-
+let notes = [];
 //
 //This JqQuery grabs the form and and listen for submit
 //The value given in the text area is stored in noteClass
@@ -13,14 +13,16 @@ $("#textAreaForm").submit((e)=>{
     } else{
         noteClass = {
             id: null,
-            noteText: noteText,
-            date: Date.now()
+            noteText: noteText
         };
     }
     noteClassHolder.push(noteClass);
     sendTextArea();
 })
 
+//
+//Here we POST the input to the database. Sending the class via JSON. 
+//
 async function sendTextArea(){
     let result = await fetch("/rest/notes", {
         method: "POST",
@@ -29,3 +31,29 @@ async function sendTextArea(){
     console.log(await result.text());
     noteClassHolder.pop();
 }
+
+//
+//Here we fetch notes that is stored in the database.
+//
+async function getNotes(){
+    let result = await fetch("/rest/notes");
+    notes = await result.json();
+    renderNotes();
+}
+
+function renderNotes(){
+    let noteList = $("#notes-list");
+    noteList.empty();
+
+    for(note of notes){
+        noteList.append(`<ul onclick="loadSelectedNote()" style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
+            Note
+        </ul>`);
+    }
+}
+
+function loadSelectedNote(){
+    console.log("Slected Note")
+}
+
+getNotes();

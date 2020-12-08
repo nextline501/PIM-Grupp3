@@ -1,7 +1,7 @@
 package Backend;
 
 import java.nio.file.Paths;
-//import java.util.List;
+import java.util.List;
 import express.Express;
 import express.middleware.Middleware;
 
@@ -9,6 +9,11 @@ public class Main {
     public static void main(String[] args) {
         Express app = new Express();
         Database db = new Database();
+
+        app.get("/rest/notes", (req, res) -> {
+            List<Notes> note = db.getNotes();
+            res.json(note);
+        });
 
         app.post("/rest/notes", (req, res) -> {
             Notes note = (Notes) req.getBody(Notes.class);
