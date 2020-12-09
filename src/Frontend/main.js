@@ -40,6 +40,12 @@ async function getNotes(){
     notes = await result.json();
     renderNotes();
 }
+async function getImages(){
+    let result = await fetch("/rest/images");
+    images = await result.json();
+    console.log(images);
+    //renderImages();
+}
 
 function renderNotes(){
     let noteList = $("#notes-list");
@@ -51,6 +57,14 @@ function renderNotes(){
         </ul>`);
     }
 }
+/* function renderImages(){
+    let imageList = $("#images-list")
+    imageList.empty();
+
+    for(image of images){
+        imageList.append(`<ul${image.author}${image.url}></ul>`)
+    }
+} */
 
 function loadSelectedNote(){
     console.log("Slected Note")

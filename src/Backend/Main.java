@@ -15,6 +15,11 @@ public class Main {
             res.json(note);
         });
 
+        app.get("/rest/images", (request, response) -> {
+            List<Img> image = db.getImages();
+            response.json(image);
+        });
+
         app.post("/rest/notes", (req, res) -> {
             Notes note = (Notes) req.getBody(Notes.class);
             System.out.println("this is my note " + note);

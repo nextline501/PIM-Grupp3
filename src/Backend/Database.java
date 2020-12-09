@@ -29,7 +29,7 @@ public class Database {
     }
 
     public List<Notes> getNotes(){
-        List<Notes> noteList = null; 
+        List<Notes> noteList = null;
 
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM notes;");
@@ -42,5 +42,20 @@ public class Database {
             e.printStackTrace();
         }
         return noteList;
+    }
+    public List<Img> getImages(){
+        List<Img> imageList = null;
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM img;");
+            ResultSet rs = stmt.executeQuery();
+
+            Img[] itemsFromRS = (Img[]) Utils.readResultSetToObject(rs, Img[].class);
+            imageList = List.of(itemsFromRS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imageList;
     }
 }
