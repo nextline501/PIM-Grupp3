@@ -16,9 +16,11 @@ $("#textAreaForm").submit((e)=>{
             noteText: noteText
         };
     }
+    deleteNote()
     noteClassHolder.push(noteClass);
     sendTextArea();
-})
+    location.reload();
+});
 
 //
 //Here we POST the input to the database. Sending the class via JSON. 
@@ -48,14 +50,15 @@ async function getImages(){
 }
 
 function renderNotes(){
-    let noteList = $("#notes-list");
+    noteList = $("#notes-list");
     noteList.empty();
 
     for(note of notes){
-        noteList.append(`<ul onclick="loadSelectedNote()" style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
-            Note
+        noteList.append(`<ul id="noteItem" style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
+            ${note.noteText}
         </ul>`);
     }
+    loadSelectedNote();
 }
 /* function renderImages(){
     let imageList = $("#images-list")
@@ -67,7 +70,23 @@ function renderNotes(){
 } */
 
 function loadSelectedNote(){
-    console.log("Slected Note")
+    let noteItemList = $("ul");
+    console.log(noteItemList.length);
+
+    for(let i = 0; i < noteItemList.length; i++){
+        $(noteItemList[i]).click(()=>{
+            $("#textArea").val(`${notes[i].noteText}`)
+        })
+    }
 }
 
+async function deleteNote(note){
+    await fetch("/rest/delete", {
+        method: "POST",
+        body: JSON.stringify(note)
+    });
+}
+
+
+$("#textArea").val('')
 getNotes();
