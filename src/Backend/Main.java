@@ -33,6 +33,11 @@ public class Main {
             res.send("delete post ok");
         });
 
+        app.post("/rest/update", (req, res)->{
+            Notes note = (Notes) req.getBody(Notes.class);
+            db.updateNotes(note);
+        });
+
         try {
             app.use(Middleware.statics(Paths.get("src/Frontend").toString()));
         } catch (Exception e) {

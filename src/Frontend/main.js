@@ -1,5 +1,6 @@
 let noteClassHolder = [];
 let notes = [];
+let currentNoteId;
 //
 //This JqQuery grabs the form and and listen for submit
 //The value given in the text area is stored in noteClass
@@ -42,6 +43,7 @@ async function getNotes(){
     notes = await result.json();
     renderNotes();
 }
+
 async function getImages(){
     let result = await fetch("/rest/images");
     images = await result.json();
@@ -60,14 +62,6 @@ function renderNotes(){
     }
     loadSelectedNote();
 }
-/* function renderImages(){
-    let imageList = $("#images-list")
-    imageList.empty();
-
-    for(image of images){
-        imageList.append(`<ul${image.author}${image.url}></ul>`)
-    }
-} */
 
 function loadSelectedNote(){
     let noteItemList = $("ul");
@@ -75,9 +69,35 @@ function loadSelectedNote(){
 
     for(let i = 0; i < noteItemList.length; i++){
         $(noteItemList[i]).click(()=>{
+            currentNoteId = i;
             $("#textArea").val(`${notes[i].noteText}`)
         })
     }
+}
+
+$("#update").click((e)=>{
+    e.preventDefault();
+    let updateText = $("#textArea").val();
+
+    noteClass = {
+        id: notes[currentNoteId].id,
+        noteText: updateText
+    };
+
+    noteClassHolder.push(noteClass);
+    updateNote();
+    location.reload();
+});
+
+//
+//Here we post a JSON to server to Update db
+//
+async function updateNote(){
+    await fetch("/rest/update", {
+        method: "POST",
+        body: JSON.stringify(noteClassHolder[0])
+    });
+    noteClassHolder.pop();
 }
 
 async function deleteNote(note){
@@ -86,7 +106,6 @@ async function deleteNote(note){
         body: JSON.stringify(note)
     });
 }
-
 
 $("#textArea").val('')
 getNotes();

@@ -69,4 +69,16 @@ public class Database {
         }
         return imageList;
     }
+
+    public void updateNotes(Notes note){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET noteText = ? WHERE notes.id = ?;");
+            stmt.setString(1, note.getNoteText());
+            stmt.setInt(2, note.getId());
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
