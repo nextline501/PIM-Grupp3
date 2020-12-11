@@ -17,7 +17,7 @@ let currentNoteId;
 $("#textAreaForm").submit((e)=>{
     e.preventDefault();
     let noteText = $("#textArea").val();
-    let randomId = (Math.random()*1000000);
+    let randomId = (Math.random()*10000000);
     console.log(noteText)
     if(noteText == null || noteText == ""){
         alert("Can't add nothing");
@@ -129,7 +129,6 @@ $("#update").click((e)=>{
 
     noteClassHolder.push(noteClass); 
     updateNote();
-    uploadImg();
 });
 
 //
