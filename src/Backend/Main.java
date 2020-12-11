@@ -2,8 +2,10 @@ package Backend;
 
 import java.nio.file.Paths;
 import java.util.List;
+import org.apache.commons.fileupload.FileItem;
 import express.Express;
 import express.middleware.Middleware;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -15,12 +17,7 @@ public class Main {
             res.json(note);
         });
 
-        app.get("/rest/images", (request, response) -> {
-            List<Img> image = db.getImages();
-            response.json(image);
-        });
-
-        app.post("/rest/notes", (req, res) -> {
+        app.post("/rest/create-post", (req, res) -> {
             Notes note = (Notes) req.getBody(Notes.class);
             System.out.println("this is my note " + note);
             db.createNote(note);
@@ -36,6 +33,28 @@ public class Main {
         app.post("/rest/update", (req, res)->{
             Notes note = (Notes) req.getBody(Notes.class);
             db.updateNotes(note);
+        });
+
+        app.post("/api/file-upload", (req, res)->{
+            String imgUrl = null;
+
+            try {
+                List<FileItem> imgFilesList = req.getFormData("filesKek");
+                imgUrl = db.uploadImage(imgFilesList.get(0));
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("File uploaded with url: "+ imgUrl);
+            System.out.println("hit file up-load 5555");
+
+            res.send(imgUrl); // await uploadResult 
+        });
+
+        app.post("/rest/imgUrl", (req, res)->{
+            Img img = (Img) req.getBody(Img.class);
+            db.sendImgDataToDb(img);
+            res.send("imgUrl ok");
         });
 
         try {
