@@ -17,18 +17,22 @@ let currentNoteId;
 $("#textAreaForm").submit((e)=>{
     e.preventDefault();
     let noteText = $("#textArea").val();
+    let titleText = $("#titleArea").val();
     let randomId = (Math.random()*10000000);
+    
     console.log(noteText)
     if(noteText == null || noteText == ""){
         alert("Can't add nothing");
     } else{
         noteClass = {
             id: randomId,
+            title: titleText,
             noteText: noteText
         };
     }
     noteClassHolder.push(noteClass);
     sendTextArea(randomId);
+    console.log(noteClassHolder)
 });
 
 //
@@ -91,8 +95,8 @@ function renderNotes(){
     noteList.empty();
     
     for(note of notes){
-        noteList.append(`<ul id="noteItem" style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
-            ${note.noteText}
+        noteList.append(`<ul id="noteItem"  style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
+        ${note.title}
         </ul>`);
     }
     loadSelectedNote();

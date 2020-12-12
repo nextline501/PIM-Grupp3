@@ -22,9 +22,10 @@ public class Database {
 
     public void createNote(Notes note){
         try {
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Notes (id, noteText) VALUES(?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Notes (id, title, noteText) VALUES(?, ?, ?)");
             stmt.setInt(1, note.getId());
-            stmt.setString(2, note.getNoteText());
+            stmt.setString(2, note.getTitle());
+            stmt.setString(3, note.getNoteText());
             stmt.executeUpdate();
 
         } catch (Exception e) {
