@@ -105,8 +105,6 @@ function renderNotes(){
     loadSelectedNote();
 }
 
-
-
 //
 //This function listens for a click and insert the text value in to the editor.
 //In order to know what note we are dealing with we are also storing the id of the selected note in the var: currentNoteId
