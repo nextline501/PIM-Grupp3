@@ -17,6 +17,12 @@ public class Main {
             res.json(note);
         });
 
+        app.get("/rest/notes/:id", (req, res) ->{
+            int id = Integer.parseInt(req.getParam("id"));
+            List<UrlHolder> urls = db.getImgUrl(id);
+            res.json(urls); 
+        });
+
         app.post("/rest/create-post", (req, res) -> {
             Notes note = (Notes) req.getBody(Notes.class);
             System.out.println("this is my note " + note);
@@ -33,6 +39,7 @@ public class Main {
         app.post("/rest/update", (req, res)->{
             Notes note = (Notes) req.getBody(Notes.class);
             db.updateNotes(note);
+            res.send("update ok");
         });
 
         app.post("/api/file-upload", (req, res)->{

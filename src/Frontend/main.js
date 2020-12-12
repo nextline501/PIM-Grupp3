@@ -1,13 +1,13 @@
 //This array holds the Note class that is sent to the server, this array allways contains just one class and is poped after the object is sent.
 //ORM
 let noteClassHolder = [];
-
 let imgClassHolder = [];
 
 //This array hold all our notes the was sent from the db
 let notes = [];
 
 //This variable hold the current id for the selected note.
+let currentNoteIndex;
 let currentNoteId;
 
 //
@@ -43,32 +43,35 @@ async function sendTextArea(idParam){
     
     console.log("hit 2")
     let files = document.querySelector('#imgFile').files;
-    let formData = new FormData();
-    console.log("hit 3")
-    for(let file of files){
-        formData.append('filesKek', file, file.name);
-    }
-    console.log("hit 4")
-    let uploadResult = await fetch('/api/file-upload', {
-        method: "POST",
-        body: formData
-    });
-    console.log("hit 5")
-    let imgUrl = await uploadResult.text(); //get the url back from server side
 
-    console.log("note id before sending: " + idParam);
-    let imgUrlClass = {
-        id: null,
-        url: imgUrl,
-        notes_id: idParam
+    if(files.length > 0){
+        let formData = new FormData();
+        console.log("hit 3")
+        for(let file of files){
+            formData.append('filesKek', file, file.name);
+        }
+        console.log("hit 4")
+        let uploadResult = await fetch('/api/file-upload', {
+            method: "POST",
+            body: formData
+        });
+        console.log("hit 5")
+        let imgUrl = await uploadResult.text(); //get the url back from server side
+
+        console.log("note id before sending: " + idParam);
+        let imgUrlClass = {
+            id: null,
+            url: imgUrl,
+            notes_id: idParam
+        }
+        console.log("hit 6")
+        let imgResult = await fetch("/rest/imgUrl", {
+            method: "POST",
+            body: JSON.stringify(imgUrlClass)
+        });
+        console.log("hit 7")
+        console.log(await imgResult.text());
     }
-    console.log("hit 6")
-    let imgResult = await fetch("/rest/imgUrl", {
-        method: "POST",
-        body: JSON.stringify(imgUrlClass)
-    });
-    console.log("hit 7")
-    console.log(await imgResult.text());
     noteClassHolder.pop();
     location.reload();
 }
@@ -98,6 +101,8 @@ function renderNotes(){
     loadSelectedNote();
 }
 
+
+
 //
 //This function listens for a click and insert the text value in to the editor.
 //In order to know what note we are dealing with we are also storing the id of the selected note in the var: currentNoteId
@@ -108,12 +113,37 @@ function loadSelectedNote(){
 
     for(let i = 0; i < noteItemList.length; i++){
         $(noteItemList[i]).click(()=>{
-            currentNoteId = i;
-            $("#textArea").val(`${notes[i].noteText}`)
+            currentNoteId = notes[i].id;
+            currentNoteIndex = i;
+            $("#textArea").val(`${notes[i].noteText}`);
+            getImgForSelectedNote();
         })
     }
 }
 
+async function getImgForSelectedNote(){
+    let result = await fetch(`/rest/notes/${currentNoteId}`)
+    urls = await result.json();
+
+    let imgList = $("#img-list");
+    imgList.empty();
+
+    if(urls.length > 0){
+        loadImgForSelectedNote();
+    }
+}
+
+function loadImgForSelectedNote(){
+    let imgList = $("#img-list");
+    imgList.empty();
+
+    for(let i = 0; i < urls.length; i++){
+        imgList.append(`
+        <ul>
+            <a href="${urls[i].url}"><img src="${urls[i].url}" width="128px" height="128px"></a>
+        </ul>`)
+    }
+}
 
 //
 //Update button stores the id and calls updateNote() function
@@ -123,23 +153,54 @@ $("#update").click((e)=>{
     let updateText = $("#textArea").val();
 
     noteClass = {
-        id: notes[currentNoteId].id,
+        id: notes[currentNoteIndex].id,
         noteText: updateText
     };
 
     noteClassHolder.push(noteClass); 
-    updateNote();
+    updateNote((notes[currentNoteIndex].id));
 });
 
 //
 //Here we post a JSON to server to Update db
 //
-async function updateNote(){
+async function updateNote(idParam){
     await fetch("/rest/update", {
         method: "POST",
         body: JSON.stringify(noteClassHolder[0])
     });
+
+    let files = document.querySelector('#imgFile').files;
+    if(files.length > 0){
+
+        let formData = new FormData();
+        console.log("hit 3")
+        for(let file of files){
+            formData.append('filesKek', file, file.name);
+        }
+        console.log("hit 4")
+        let uploadResult = await fetch('/api/file-upload', {
+            method: "POST",
+            body: formData
+        });
+        console.log("hit 5")
+        let imgUrl = await uploadResult.text(); //get the url back from server side
+
+        console.log("note id before sending: " + idParam);
+        let imgUrlClass = {
+            id: null,
+            url: imgUrl,
+            notes_id: idParam
+        }
+        console.log("hit 6")
+        let imgResult = await fetch("/rest/imgUrl", {
+            method: "POST",
+            body: JSON.stringify(imgUrlClass)
+        });
+        console.log("hit 7")
+    }
     noteClassHolder.pop();
+    location.reload();
 }
 
 //
@@ -148,7 +209,7 @@ async function updateNote(){
 $("#delete").click((e)=>{
     e.preventDefault();
     noteClass = {
-        id: notes[currentNoteId].id,
+        id: notes[currentNoteIndex].id,
         noteText: null
     }
     noteClassHolder.push(noteClass);
