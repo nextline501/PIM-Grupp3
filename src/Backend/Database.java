@@ -59,21 +59,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public List<Img> getImages(){
-        List<Img> imageList = null;
-
-        try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM img;");
-            ResultSet rs = stmt.executeQuery();
-
-            Img[] itemsFromRS = (Img[]) Utils.readResultSetToObject(rs, Img[].class);
-            imageList = List.of(itemsFromRS);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return imageList;
-    }
 
     public void updateNotes(Notes note){
         try {
@@ -121,5 +106,20 @@ public class Database {
         }
     }
 
+    public List<UrlHolder> getImgUrl(int id){
+        List<UrlHolder> urls = null;
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT img.url FROM img WHERE img.notes_id = ?");
+            stmt.setInt(1, id);
 
+            ResultSet rs = stmt.executeQuery();
+            
+            UrlHolder[] itemsFromRS = (UrlHolder[]) Utils.readResultSetToObject(rs, UrlHolder[].class);
+            urls = List.of(itemsFromRS);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return urls;
+    }
 }
