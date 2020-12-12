@@ -11,19 +11,20 @@
 </head>
 
 <body>
-    <section style="width: 200px; float:left; height:1000px; background-color:lightblue">
+    <aside>
         <h1>Notes Side Bar</h1>
+        <button onclick="sortList()">Sort by alphabet</button>
         <section id="notes-list">
             
         </section>
-    </section>
-    <section style="width: 100px; float:left; height:100px;">
+    </aside>
+    <section id="text_section">
         <form id="textAreaForm">
             
             <input id="imgFile" type="file" accept="image/*" placeholder="select image">
             <img src="" alt="img">
             <input type="text" id="titleArea" placeholder="Title">
-            <textarea type="text" placeholder="Text" id="textArea" rows="10" cols="20" style="margin-top: 25px;"></textarea>
+            <textarea type="text" placeholder="Text" id="textArea" rows="10" cols="20"></textarea>
             <button type="submit">New Note</button>
             <button id="update">Update Note</button>
             <button id="delete">Delete</button>

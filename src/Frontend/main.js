@@ -95,7 +95,7 @@ function renderNotes(){
     noteList.empty();
     
     for(note of notes){
-        noteList.append(`<ul id="noteItem"  style="width: 160px; float:left; height: 50px; background-color:rgb(113, 158, 173); margin-botton: 10px">
+        noteList.append(`<ul id="noteItem">
         ${note.title}
         </ul>`);
     }
@@ -170,6 +170,30 @@ async function deleteNote(){
     });
     noteClassHolder.pop();
 }
+
+  function sortList() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementById("notes-list");
+    switching = true;
+    
+    while (switching) {
+            switching = false;
+      b = list.getElementsByTagName("ul");
+      
+      for (i = 0; i < (b.length - 1); i++) {
+        
+        shouldSwitch = false;      
+        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {         
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+    }
+}  
 
 //if we reload textArea is cleared.
 $("#textArea").val('')

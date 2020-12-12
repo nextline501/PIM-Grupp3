@@ -1,0 +1,19 @@
+ul{
+    width: 160px;
+    float:left; height: 30px;
+    background-color:rgb(113, 158, 173);
+    margin-bottom: 10px;
+}
+textarea{
+    margin-top: 25px;
+}
+aside{
+    width: 200px;
+    float:left; height:1000px;
+    background-color:lightblue
+}
+#text_section{
+    width: 100px;
+    float:left;
+    height:100px;
+}
