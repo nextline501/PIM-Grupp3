@@ -148,14 +148,19 @@ function loadImgForSelectedNote(){
         console.log(extension);
         if(extension === 'pdf'){
             imgList.append(`
-        <ul>
-            <a href="${urls[i].url}"><iframe src="${urls[i].url}" width="300px" height="300px"></a>
-        </ul>`)
+                <ul>
+                    <iframe class="iframeHolder" src="${urls[i].url}" width="300px" height="300px">
+                </ul>`)
+
+            imgList.append(`<ul>
+                <a href="${urls[i].url}">${urls[i].url}</a>
+                <button class="deleteImg">Delete</button></ul>`);
         }
         else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg'){
             imgList.append(`
         <ul>
             <a href="${urls[i].url}"><img src="${urls[i].url}" width="300px" height="300px"></a>
+            <button class="deleteImg">Delete</button>
         </ul>`)}
         
     }
@@ -242,8 +247,10 @@ function deleteSelectedImg(){
     for(let i = 0; i < deleteImgButtons.length; i++){
         $(deleteImgButtons[i]).click(()=>{
             let parent = $(deleteImgButtons[i]).parent();
+            let iframe = $(".iframeHolder").parent();
             console.log(parent);
             parent.hide();
+            iframe.hide();
             postDeleteImg(urls[i].id);
         })
     }
