@@ -135,15 +135,28 @@ async function getImgForSelectedNote(){
     }
 }
 
+//loading images or pdf files depending on the file extension
+//
 function loadImgForSelectedNote(){
     let imgList = $("#img-list");
     imgList.empty();
 
     for(let i = 0; i < urls.length; i++){
-        imgList.append(`
+        fileName = urls[i].url
+        extension = fileName.replace(/^.*\./, '');
+        console.log(extension);
+        if(extension === 'pdf'){
+            imgList.append(`
         <ul>
-            <a href="${urls[i].url}"><img src="${urls[i].url}" width="128px" height="128px"></a>
+            <a href="${urls[i].url}"><iframe src="${urls[i].url}" width="300px" height="300px"></a>
         </ul>`)
+        }
+        else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg'){
+            imgList.append(`
+        <ul>
+            <a href="${urls[i].url}"><img src="${urls[i].url}" width="300px" height="300px"></a>
+        </ul>`)}
+        
     }
 }
 
@@ -230,7 +243,9 @@ async function deleteNote(){
     noteClassHolder.pop();
 }
 
-  function sortList() {
+//sort function for sorting titles by alphabet
+//
+function sortList() {
     var list, i, switching, b, shouldSwitch;
     list = document.getElementById("notes-list");
     switching = true;
