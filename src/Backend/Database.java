@@ -109,7 +109,7 @@ public class Database {
     public List<UrlHolder> getImgUrl(int id){
         List<UrlHolder> urls = null;
         try {
-            PreparedStatement stmt = conn.prepareStatement("SELECT img.url FROM img WHERE img.notes_id = ?");
+            PreparedStatement stmt = conn.prepareStatement("SELECT img.id, img.url FROM img WHERE img.notes_id = ?");
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
@@ -121,5 +121,27 @@ public class Database {
             e.printStackTrace();
         }
         return urls;
+    }
+
+    public void deleteSelectedImgById(int id){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM img WHERE img.id = ?");
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAllImgBasedOnNoteId(int noteId){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM img WHERE img.notes_id = ?");
+            stmt.setInt(1, noteId);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

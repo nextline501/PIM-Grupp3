@@ -33,6 +33,7 @@ public class Main {
         app.post("/rest/delete", (req, res) ->{
             Notes note = (Notes) req.getBody(Notes.class);
             db.deleteNote(note);
+            db.deleteAllImgBasedOnNoteId(note.getId());
             res.send("delete post ok");
         });
 
@@ -62,6 +63,12 @@ public class Main {
             Img img = (Img) req.getBody(Img.class);
             db.sendImgDataToDb(img);
             res.send("imgUrl ok");
+        });
+
+        app.post("/rest/imgDelete", (req, res)->{
+            UrlHolder urlobj = (UrlHolder) req.getBody(UrlHolder.class);
+            db.deleteSelectedImgById(urlobj.getId());
+            res.send("post ok");
         });
 
         try {

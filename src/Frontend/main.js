@@ -5,6 +5,7 @@ let imgClassHolder = [];
 
 //This array hold all our notes the was sent from the db
 let notes = [];
+let urls = [];
 
 //This variable hold the current id for the selected note.
 let currentNoteIndex;
@@ -32,7 +33,7 @@ $("#textAreaForm").submit((e)=>{
     }
     noteClassHolder.push(noteClass);
     sendTextArea(randomId);
-    console.log(noteClassHolder)
+    console.log(noteClassHolder);
 });
 
 //
@@ -119,7 +120,7 @@ function loadSelectedNote(){
             currentNoteIndex = i;
             $("#textArea").val(`${notes[i].noteText}`);
             getImgForSelectedNote();
-        })
+        });
     }
 }
 
@@ -158,6 +159,8 @@ function loadImgForSelectedNote(){
         </ul>`)}
         
     }
+    
+    deleteSelectedImg();
 }
 
 //
@@ -232,6 +235,32 @@ $("#delete").click((e)=>{
     location.reload();
 });
 
+function deleteSelectedImg(){
+    let deleteImgButtons = $(".deleteImg");
+    console.log("delete buttons length " + deleteImgButtons.length)
+
+    for(let i = 0; i < deleteImgButtons.length; i++){
+        $(deleteImgButtons[i]).click(()=>{
+            let parent = $(deleteImgButtons[i]).parent();
+            console.log(parent);
+            parent.hide();
+            postDeleteImg(urls[i].id);
+        })
+    }
+}
+
+async function postDeleteImg(imgId){
+    imgClassForDelete = {
+        id: imgId,
+        url: null
+    }
+
+    await fetch("/rest/imgDelete", {
+        method:"POST",
+        body: JSON.stringify(imgClassForDelete)
+    });
+}
+
 //
 //deleteNote function sends the id for the note that is up for delete
 //
@@ -251,23 +280,23 @@ function sortList() {
     switching = true;
     
     while (switching) {
-            switching = false;
-      b = list.getElementsByTagName("ul");
+        switching = false;
+        b = list.getElementsByTagName("ul");
       
-      for (i = 0; i < (b.length - 1); i++) {
-        
-        shouldSwitch = false;      
-        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {         
-          shouldSwitch = true;
-          break;
+        for (i = 0; i < (b.length - 1); i++) {
+            shouldSwitch = false;      
+            if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {         
+                shouldSwitch = true;
+                break;
+            }
         }
-      }
-      if (shouldSwitch) {
-        b[i].parentNode.insertBefore(b[i + 1], b[i]);
-        switching = true;
-      }
+
+        if (shouldSwitch) {
+            b[i].parentNode.insertBefore(b[i + 1], b[i]);
+            switching = true;
+        }
     }
-}  
+}
 
 //if we reload textArea is cleared.
 $("#textArea").val('')
