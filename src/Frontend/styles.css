@@ -17,3 +17,7 @@ aside{
     float:left;
     height:100px;
 }
+
+#notes-list ul.active{
+    background-color:rgb(107, 177, 238);
+}

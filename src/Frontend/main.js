@@ -88,7 +88,7 @@ function renderNotes(){
     noteList.empty();
     
     for(note of notes){
-        noteList.append(`<ul id="noteItem">
+        noteList.append(`<ul id="noteItem" class="active">
         ${note.title}
         </ul>`);
     }
@@ -108,6 +108,8 @@ function loadSelectedNote(){
             currentNoteId = notes[i].id;
             currentNoteIndex = i;
             $("#textArea").val(`${notes[i].noteText}`);
+            $("ul").not(this).removeClass("active");
+            $(noteItemList[i]).addClass("active");
             getImgForSelectedNote();
         });
     }
@@ -279,6 +281,10 @@ function sortList() {
             switching = true;
         }
     }
+}
+
+function newNote(){
+    location.reload();
 }
 
 //if we reload textArea is cleared.
