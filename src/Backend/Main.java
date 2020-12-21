@@ -1,6 +1,7 @@
 package Backend;
 
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.fileupload.FileItem;
 import express.Express;
@@ -45,24 +46,25 @@ public class Main {
 
         app.post("/api/file-upload", (req, res)->{
             String imgUrl = null;
-
             try {
                 List<FileItem> imgFilesList = req.getFormData("filesKek");
-                imgUrl = db.uploadImage(imgFilesList.get(0));
-                
+
+                Iterator<FileItem> it = imgFilesList.iterator();
+                int index = 0;
+
+                while(it.hasNext()){
+                    if(index >= imgFilesList.size()){
+                        index = 0;
+                        break;
+                    }
+                    imgUrl = db.uploadImage(imgFilesList.get(index));
+                    db.sendImgDataToDb(imgUrl);
+                    index++;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("File uploaded with url: "+ imgUrl);
-            System.out.println("hit file up-load 5555");
-
-            res.send(imgUrl); // await uploadResult 
-        });
-
-        app.post("/rest/imgUrl", (req, res)->{
-            Img img = (Img) req.getBody(Img.class);
-            db.sendImgDataToDb(img);
-            res.send("imgUrl ok");
+            res.send("post ok"); // await uploadResult 
         });
 
         app.post("/rest/imgDelete", (req, res)->{
