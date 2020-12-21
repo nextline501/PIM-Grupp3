@@ -10,6 +10,7 @@ import express.utils.Utils;
 
 public class Database {
     private Connection conn;
+    private int currentIdParam;
 
     public Database(){
         try {
@@ -21,6 +22,8 @@ public class Database {
     }
 
     public void createNote(Notes note){
+        currentIdParam = note.getId();
+
         try {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO Notes (id, title, noteText) VALUES(?, ?, ?)");
             stmt.setInt(1, note.getId());
@@ -61,6 +64,8 @@ public class Database {
     }
 
     public void updateNotes(Notes note){
+        currentIdParam = note.getId();
+
         try {
             PreparedStatement stmt = conn.prepareStatement("UPDATE notes SET noteText = ? WHERE notes.id = ?;");
             stmt.setString(1, note.getNoteText());
@@ -93,12 +98,13 @@ public class Database {
         return imageUrl;
     }
 
-    public void sendImgDataToDb(Img img){
+    public void sendImgDataToDb(String url){
+        Img img = new Img();
         try {
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO img (id, url, notes_id) VALUES (?, ?, ?)");
             stmt.setNull(1, img.getId());
-            stmt.setString(2, img.getUrl());
-            stmt.setInt(3, img.getNotes_id());
+            stmt.setString(2, url);
+            stmt.setInt(3, currentIdParam);
             stmt.executeUpdate();
 
         } catch (Exception e) {

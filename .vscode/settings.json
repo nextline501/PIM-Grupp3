@@ -3,5 +3,6 @@
         "lib/**/*.jar",
         "libs/java-express-0.3.5.jar",
         "libs/sqlite-jdbc-3.32.3.2 (1).jar"
-    ]
+    ],
+    "files.autoSave": "afterDelay"
 }
