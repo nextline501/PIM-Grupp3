@@ -10,7 +10,7 @@
     <link href="styles.css" rel="stylesheet"/>
 </head>
 
-<body>
+<body class="wrapper">
     <aside>
         <h1>Notes Side Bar</h1>
         <button onclick="sortList()">Sort by alphabet</button>
@@ -24,9 +24,9 @@
 
     <section id="text_section">
         <form id="textAreaForm">
-            <input id="imgFile" type="file" accept="image/*, application/pdf" multiple>
+            <input id="imgFile" type="file" accept="image/*, application/pdf*" multiple>
             <input type="text" id="titleArea" placeholder="Title">
-            <textarea type="text" placeholder="Text" id="textArea" rows="20" cols="60"></textarea>
+            <textarea type="text" placeholder="Text" id="textArea" rows="5" cols="28"></textarea>
             <button type="submit">New Note</button>
             <button id="update">Update Note</button>
             <button id="delete">Delete</button>

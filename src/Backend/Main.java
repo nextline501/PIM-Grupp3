@@ -17,7 +17,7 @@ public class Main {
             List<Notes> note = db.getNotes();
             res.json(note);
         });
-
+        //getting imgData from Database
         app.get("/rest/notes/:id", (req, res) ->{
             int id = Integer.parseInt(req.getParam("id"));
             List<UrlHolder> urls = db.getImgUrl(id);
@@ -30,7 +30,7 @@ public class Main {
             db.createNote(note);
             res.send("post ok");
         });
-
+        //Deleting note and all images based on noteId
         app.post("/rest/delete", (req, res) ->{
             Notes note = (Notes) req.getBody(Notes.class);
             db.deleteNote(note);
@@ -43,7 +43,7 @@ public class Main {
             db.updateNotes(note);
             res.send("update ok");
         });
-
+        //Sending imageData to Database
         app.post("/api/file-upload", (req, res)->{
             String imgUrl = null;
             try {
@@ -67,9 +67,10 @@ public class Main {
             res.send("post ok"); // await uploadResult 
         });
 
+        //Deleting images and files separately based on imgId
         app.post("/rest/imgDelete", (req, res)->{
             UrlHolder urlobj = (UrlHolder) req.getBody(UrlHolder.class);
-            db.deleteSelectedImgById(urlobj.getId());
+            db.deleteSelectedImgById(urlobj.getId());//UrlHolderId
             res.send("post ok");
         });
 
