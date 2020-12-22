@@ -1,0 +1,66 @@
+Feature:
+As a user I want to have the option to make a new note.
+
+Scenario:
+Given that the user have found the create new note note button
+And when the button is clicked he get access to a new note editor 
+Then in that editor the user can write notes
+The user will be able to add image to his note by clicking the add image button
+the user will be able to attach a file to his note by clicking the attach file button.
+The user will able to set date and time to execute the note
+The user will then click the add note button to complete the note.
+
+------
+Feature:
+As a user I want to be able to add an image or attach file to my existing note or change the text of my note
+
+Scenario:
+Given that the user clicks on the existing note
+Then the user is offered to change the text of his note.
+Then the user is ofered to attach a file by clicking on attach file button
+Then the user is offered to add an image to his note by clicking on add image button
+Then the user will be able to click a save changes button.
+
+------
+Feature:
+As a user I want to be able to mark(check or uncheck) my existing note 
+
+Scenario:
+Given that the user clicks on the existing note to mark the note
+Then the note will be marked as a finished note
+Given that the user changes his mind and dont want to mark the note.
+Then by clicking on the note one more time the note will be unchecked.
+
+
+------
+
+Feature:
+As a user I want to delete existing notes 
+
+Scenario:
+Given that the user clicks on the existing note 
+Given that the user clicks on the delete note button.
+Then the current note and all images and files will be deleted.
+
+------
+
+Feature:
+As a user I want to sort by my notes by Category
+Scenario:
+Given that the user clicks on the scrolldown button
+Given that the user clicks on the category button in the scrolldown
+Than the the user will be able to see notes which are related to the given category
+
+
+
+
+
+
+
+
+
+
+
+
+
+
