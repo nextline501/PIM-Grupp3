@@ -1,14 +1,11 @@
 //This array holds the Note class that is sent to the server, this array allways contains just one class and is poped after the object is sent.
 //ORM
 let noteClassHolder = [];
-let imgClassHolder = [];
 
 //This array hold all our notes the was sent from the db
 let notes = [];
 let urls = [];
 
-//Array of json object from uploads
-let incomingUrlArray = [];
 
 //This variable hold the current id for the selected note.
 let currentNoteIndex;
@@ -26,7 +23,9 @@ $("#textAreaForm").submit((e)=>{
     
     console.log(noteText)
     if(noteText == null || noteText == ""){
-        alert("Can't add nothing");
+        alert("Add some text")
+    }else if(titleText == null || titleText == ""){
+        alert("Add some title")
     } else{
         noteClass = {
             id: randomId,
@@ -88,7 +87,7 @@ function renderNotes(){
     noteList.empty();
     
     for(note of notes){
-        noteList.append(`<ul id="noteItem" class="active">
+        noteList.append(/*html*/`<ul id="noteItem" class="active">
         ${note.title}
         </ul>`);
     }
@@ -138,19 +137,19 @@ function loadImgForSelectedNote(){
         extension = fileName.replace(/^.*\./, '');
         console.log(extension);
         if(extension === 'pdf'){
-            imgList.append(`
+            imgList.append(/*html*/`
                 <ul>
-                    <iframe class="iframeHolder" src="${urls[i].url}" width="300px" height="300px">
+                    <iframe class="iframeHolder" src="${urls[i].url}" >
                 </ul>`);
 
-            imgList.append(`<ul>
-                <a href="${urls[i].url}">${urls[i].url}</a>
+            imgList.append(/*html*/`<ul>
+                <a class="iframeLink" href="${urls[i].url}">${urls[i].url}</a>
                 <button class="deleteImg">Delete</button></ul>`);
         }
         else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg'){
-            imgList.append(`
+            imgList.append(/*html*/`
         <ul>
-            <a href="${urls[i].url}"><img src="${urls[i].url}" width="300px" height="300px"></a>
+            <a href="${urls[i].url}"><img src="${urls[i].url}" ></a>
             <button class="deleteImg">Delete</button>
         </ul>`)}
         

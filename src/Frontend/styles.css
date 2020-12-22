@@ -1,3 +1,7 @@
+body{
+    background-image: url(/uploads/alberto-restifo-cFplR9ZGnAk-unsplash.jpg);
+    background-size: cover;
+}
 #noteItem{
     width: 160px;
     float:left; height: 30px;
@@ -9,15 +13,41 @@ textarea{
 }
 aside{
     width: 200px;
-    float:left; height:1000px;
-    background-color:lightblue
+    float:left; 
+    height:auto;
 }
 #text_section{
-    width: 100px;
+    width: 320px;
     float:left;
-    height:100px;
+    margin-top: 19px;
 }
 
 #notes-list ul.active{
     background-color:rgb(107, 177, 238);
 }
+iframe{
+    height: 200px;
+    width: 200px;
+}
+img{
+    width: 200px;
+    height: 200px;
+}
+#textArea{
+    font-size: 18px;
+    color: rgb(89, 0, 255);
+}
+#img-list{
+    float: left;
+    width: 260px;
+}
+.wrapper{
+    max-width: 900px;
+    margin: 0 auto;
+}
+.iframeLink{
+    background-color: lightblue;
+    float: left;
+    font-size: 12px;
+}
+      
